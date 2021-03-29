@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+        db:
+                image: mysql:latest
+                environment:
+                        - MYSQL_ROOT_PASSWORD=root
+                        - MYSQL_DATABASE=phpfusion
+                command: --default-authentication-plugin=mysql_native_password
+                volumes:
+                        - ./db:/var/lib/mysql
+                ports:
+                        - "3306:3306"
+        web:
+                image: xxxinke/php-fusion_web:1.0
+                volumes:
+                        - ./html/config.php:/var/www/html/files/config.php
+                depends_on:
+                        - db
+                links:
+                        - db
+                ports:
+                        - "80:80"
